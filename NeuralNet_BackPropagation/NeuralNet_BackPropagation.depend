@@ -1,0 +1,34 @@
+# depslib dependency file v1.0
+1489862860 source:c:\users\administrator\desktop\edukacja\studia\inf_1\4b_semestr\inteligentna analiza danych\1. perceptron wielowarstwowy\neuralnet_backpropagation\main.cpp
+	<iostream>
+	<tgmath.h>
+	<vector>
+	"Analyzer.h"
+	"Reader.h"
+	"TrainingPair.h"
+
+1489862918 source:c:\users\administrator\desktop\edukacja\studia\inf_1\4b_semestr\inteligentna analiza danych\1. perceptron wielowarstwowy\neuralnet_backpropagation\analyzer.cpp
+	<tgmath.h>
+	"Analyzer.h"
+	"TrainingPair.h"
+
+1489862918 c:\users\administrator\desktop\edukacja\studia\inf_1\4b_semestr\inteligentna analiza danych\1. perceptron wielowarstwowy\neuralnet_backpropagation\analyzer.h
+	<vector>
+
+1489855524 c:\users\administrator\desktop\edukacja\studia\inf_1\4b_semestr\inteligentna analiza danych\1. perceptron wielowarstwowy\neuralnet_backpropagation\trainingpair.h
+	<iostream>
+
+1489862555 c:\users\administrator\desktop\edukacja\studia\inf_1\4b_semestr\inteligentna analiza danych\1. perceptron wielowarstwowy\neuralnet_backpropagation\reader.h
+	<iostream>
+	<fstream>
+	<vector>
+
+1489862661 source:c:\users\administrator\desktop\edukacja\studia\inf_1\4b_semestr\inteligentna analiza danych\1. perceptron wielowarstwowy\neuralnet_backpropagation\reader.cpp
+	"Reader.h"
+	"TrainingPair.h"
+	<string>
+	<cstdlib>
+
+1489855513 source:c:\users\administrator\desktop\edukacja\studia\inf_1\4b_semestr\inteligentna analiza danych\1. perceptron wielowarstwowy\neuralnet_backpropagation\trainingpair.cpp
+	"TrainingPair.h"
+
