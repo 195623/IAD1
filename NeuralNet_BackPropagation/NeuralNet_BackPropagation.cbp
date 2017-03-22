@@ -31,6 +31,12 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="Analyzer.cpp" />
+		<Unit filename="Analyzer.h" />
+		<Unit filename="Reader.cpp" />
+		<Unit filename="Reader.h" />
+		<Unit filename="TrainingPair.cpp" />
+		<Unit filename="TrainingPair.h" />
 		<Unit filename="main.cpp" />
 		<Extensions>
 			<code_completion />
