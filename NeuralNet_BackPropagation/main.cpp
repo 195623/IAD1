@@ -10,30 +10,27 @@ using namespace std ;
 
 int main()
 {
-    Reader reader ;
-    Analyzer analyzer ;
+    float w1 = .5, w2 = .5, eta = .5 ;
+    string fileName = "approximation_train_1.txt" ;
 
-    float w1 = .5, w2 = .5 ;
 
-    vector<string> lines = reader.Read("example.txt") ; //stops reading when two successive lines are the same
-    cout << lines.size() << " lines.\n\n" ;
+    Analyzer analyzer = Analyzer(w1,w2,eta);
+    analyzer.Learn(fileName) ;
 
-    vector<TrainingPair> trainingPairs = reader.Parse_All_Lines(lines) ;
+    //float w1 = .5, w2 = .5 ;
+    //float i1 = .5, tar = .5 ;
 
-    cout << "Total error: " << analyzer.E_total(trainingPairs,w1,w2) ;
+    //vector<string> lines = reader.Read("approximation_train_1.txt") ; //stops reading when two successive lines are the same
+    //cout << lines.size() << " lines.\n\n" ;
 
-    /*Analyzer analyzer ;
+    //vector<TrainingPair> trainingPairs = reader.Parse_All_Lines(lines) ;
 
-    float w1 = .5, w2 = .5 ;
-    float i1 = .5 ;
-    float tar_o = .2 ;
+    /*cout << "\nTotal error: " << analyzer.E_total(trainingPairs,w1,w2) ;
 
-    float error = analyzer.E_single(analyzer.Out_o(w1,w2,i1),tar_o) ;
+    cout << "\ndE/dw1: " << analyzer.dE_dw1(w1,w2,i1,tar) ;*/
 
-    cout << error << '\n' ;
 
-    float dw1 = analyzer.dE_dw1(w1,w2,i1,tar_o) ;
-    cout << dw1 << '\n' ;*/
+    cin.get() ;
 
     return 0 ;
 }
