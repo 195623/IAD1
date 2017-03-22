@@ -1,10 +1,11 @@
 #include <vector>
+#include <iostream>
 class TrainingPair ;
 
 class Analyzer
 {
 public:
-    Analyzer() ;
+    Analyzer( float w1, float w2, float eta ) ;
     float Net_h (float w1, float i1 ) ;
     float Out_h ( float w1, float i1 ) ;
     float Net_o ( float w1, float w2, float i1 ) ;
@@ -13,6 +14,11 @@ public:
     float dE_dw1 (float w1, float w2, float i1, float tar ) ;
     float E_total( std::vector<TrainingPair> trainingPair, float w1, float w2 ) ;
 
+    void Learn( std::string fileName ) ;
+
 private:
-    std::vector<TrainingPair*> trainingPairs ;
+    //std::vector<TrainingPair*> trainingPairs ;
+    float w1 ;
+    float w2 ;
+    float eta ;
 };
