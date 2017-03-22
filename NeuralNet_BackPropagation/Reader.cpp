@@ -43,6 +43,8 @@ vector<TrainingPair> Reader::Parse_All_Lines( vector<string> lines )
         pairs.push_back( Parse_Line(*i) );
     }
 
+    //cout << "\n\n" ;
+
     return pairs ;
 }
 
@@ -64,7 +66,7 @@ TrainingPair Reader::Parse_Line( string textLine )
 
     sinput = textLine.substr(0,spaceIndex) ;
     soutput = textLine.substr(spaceIndex+1,len-spaceIndex-1) ;
-    cout << sinput << "_" << soutput << endl ;
+    //cout << sinput << "_" << soutput << endl ;
 
     //float input, output ; // convert strings to floats
 
