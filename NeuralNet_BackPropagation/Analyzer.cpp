@@ -48,6 +48,12 @@ float Analyzer::dE_dw1 (float w1, float w2, float i1, float tar )
 }
 
 
+float Analyzer::dE_dw2 (float w1, float w2, float i1, float tar )
+{
+    return ( (Out_o(w1,w2,i1)-tar) * Out_o(w1,w2,i1) * (1-Out_o(w1,w2,i1)) * Out_h(w1,i1) ) ;
+}
+
+
 
 float Analyzer::E_total( vector<TrainingPair> trainingPair, float w1, float w2 )
 {
@@ -72,8 +78,10 @@ void Analyzer::Learn( string fileName )
 
     for( vector<TrainingPair>::iterator it = trainingPairs.begin() ; it != trainingPairs.end() ; it++ )
     {
-        cout << "W1 = " << w1 << " --> Current error: " << this->E_total(trainingPairs,w1,w2) << "\n" ;
-        float d = this->dE_dw1(w1,w2,(*it).Get_input(),(*it).Get_output()) ;
-        w1 -= eta*d ;
+        cout << "(" << w1 << "," << w2 << ") --> Current error: " << this->E_total(trainingPairs,w1,w2) << "\n" ;
+        float d1 = this->dE_dw1(w1,w2,(*it).Get_input(),(*it).Get_output()) ;
+        float d2 = this->dE_dw2(w1,w2,(*it).Get_input(),(*it).Get_output()) ;
+        w1 -= eta*d1 ;
+        w2 -= eta*d2 ;
     }
 }
