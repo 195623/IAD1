@@ -6,28 +6,28 @@
 #include "Reader.h"
 #include "TrainingPair.h"
 
+// newFunctions: H has a sigmoidal Activation Function, and O has an "y(x)=x" Activation Function.
+
 using namespace std ;
 
 int main()
 {
-    float w1 = .5, w2 = .5, eta = .5 ;
+
     string fileName = "approximation_train_1.txt" ;
 
 
-    Analyzer analyzer = Analyzer(w1,w2,eta);
-    analyzer.Learn(fileName) ;
+    int   h_n = 3 ;
+    float inputWeights = 0.5,
+          outputWeights = 0.5,
+          eta = .5, b_in = .01, b_out = .01 ;
 
-    //float w1 = .5, w2 = .5 ;
-    //float i1 = .5, tar = .5 ;
+    Analyzer analyzer = Analyzer(h_n,inputWeights,outputWeights,eta,b_in,b_out);
 
-    //vector<string> lines = reader.Read("approximation_train_1.txt") ; //stops reading when two successive lines are the same
-    //cout << lines.size() << " lines.\n\n" ;
+    cout << analyzer.newOut_o(.1) ;
 
-    //vector<TrainingPair> trainingPairs = reader.Parse_All_Lines(lines) ;
-
-    /*cout << "\nTotal error: " << analyzer.E_total(trainingPairs,w1,w2) ;
-
-    cout << "\ndE/dw1: " << analyzer.dE_dw1(w1,w2,i1,tar) ;*/
+    //float w1 = .5, w2 = .5, eta = .5 ;
+    //Analyzer analyzer = Analyzer(w1,w2,eta);
+    //analyzer.Learn(fileName,1000) ;
 
 
     cin.get() ;
