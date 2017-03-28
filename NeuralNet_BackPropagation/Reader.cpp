@@ -1,5 +1,5 @@
 #include "Reader.h"
-#include "TrainingPair.h"
+#include "Pair.h"
 #include <string>
 #include <cstdlib>
 using namespace std ;
@@ -29,17 +29,20 @@ vector<string> Reader::Read( string fileName )
             else textLines.push_back(thisLine);
         }
     }
+    else cout << "There is no \"" << fileName << "\" file.\n\n" ;
+
     myFile.close();
 
     return textLines ;
 }
 
-vector<TrainingPair> Reader::Parse_All_Lines( vector<string> lines )
+vector<Pair> Reader::Parse_All_Lines( vector<string> lines )
 {
-    vector<TrainingPair> pairs ;
+    vector<Pair> pairs ;
 
     for( vector<string>::iterator i = lines.begin() ; i != lines.end() ; i++ )
     {
+        //cout << *i << endl ;
         pairs.push_back( Parse_Line(*i) );
     }
 
@@ -48,7 +51,7 @@ vector<TrainingPair> Reader::Parse_All_Lines( vector<string> lines )
     return pairs ;
 }
 
-TrainingPair Reader::Parse_Line( string textLine )
+Pair Reader::Parse_Line( string textLine )
 {
     int len = textLine.length() ;
     int spaceIndex ;
@@ -73,5 +76,5 @@ TrainingPair Reader::Parse_Line( string textLine )
     float input = atof(sinput.c_str());
     float output = atof(soutput.c_str());
 
-    return TrainingPair(input,output) ;
+    return Pair(input,output) ;
 }

@@ -2,15 +2,15 @@
 #include <fstream>
 #include <vector>
 
-class TrainingPair ;
+class Pair ;
 
 class Reader
 {
 public:
     Reader() ;
     std::vector<std::string> Read( std::string fileName ) ;
-    TrainingPair Parse_Line( std::string textLine ) ;
-    std::vector<TrainingPair> Parse_All_Lines( std::vector<std::string> lines ) ;
+    Pair Parse_Line( std::string textLine ) ;
+    std::vector<Pair> Parse_All_Lines( std::vector<std::string> lines ) ;
 
     private:
 
