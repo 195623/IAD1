@@ -6,7 +6,7 @@
 #include "Reader.h"
 #include "Pair.h"
 
-// newFunctions: H has a sigmoidal Activation Function, and O has an "y(x)=x" Activation Function.
+// Functions: H has a sigmoidal Activation Function, and O has an "y(x)=x" Activation Function.
 
 using namespace std ;
 
@@ -14,66 +14,98 @@ void Display_Pairs( vector<Pair> trainingPair );
 
 int main()
 {
-
-    string fileName = "approximation_test.txt" ;
-
+    string train1 = "approximation_train_1.txt",
+           train2 = "approximation_train_2.txt",
+           test   = "approximation_test.txt" ;
 
     int   hiddenNeurons = 10 ;
-    double inputWeights = 0.5,
-          outputWeights = 0.5,
-          eta = .001, biasH = 0, biasO = 0 ;
+    double eta = 0.2, biasH = .3, biasO = 0.6 ;
 
-    cout << "w_in = " ;
-    cin >> inputWeights ;
+    /*cout << "eta = " ;
+    cin >> eta ;
 
-    cout << "\nw_out = " ;
-    cin >> outputWeights ;
-
-    Reader reader ;
-    vector<string> lines = reader.Read(fileName) ;
-    vector<Pair> trainingPairs = reader.Parse_All_Lines(lines) ;
-
-// ----------------
-    /*Display_Pairs(trainingPairs) ;
-    cin.get();
-    return 0 ;*/
-// ----------------
-
-    Analyzer analyzer = Analyzer(hiddenNeurons,eta,biasH,biasO,inputWeights,outputWeights);
+    if( eta > 0 )
+    {
+        cout << "#hidden_neurons = " ;
+        cin >> hiddenNeurons ;
+        cout << "biasH = " ;
+        cin >> biasH ;
+        cout << "biasO = " ;
+        cin >> biasO ;
+    }*/
 
 
-    cout << "Average Total error: " << analyzer.newAvgTotalError(trainingPairs) ;
+            Reader reader ;
+            vector<string> lines = reader.Read(train1) ;
+            vector<Pair> trainingPairs = reader.Parse_All_Lines(lines) ;
+
+            lines = reader.Read(test) ;
+            vector<Pair> testPairs = reader.Parse_All_Lines(lines) ;
+
+    Analyzer analyzer = Analyzer(hiddenNeurons,eta,biasH,biasO,"random");
+
+    analyzer.Show_Weights();
+    cout << "Average Total error: " << analyzer.AvgTotalError(testPairs) << '\n' ;
 
     string text ;
+    int reps = 0 ;
+    cout << "Reps: " ;
+    cin >> reps ;
 
-    int i = 0 ;
+    double milestone = analyzer.AvgTotalError(testPairs) ;
+    double previousError = 0, currentError = milestone ;
+
     do
     {
-        i++ ;
-        cout << "\n#" << i << ":\n" ;
-        analyzer.Train(trainingPairs) ;
-        getline(cin,text) ;
+        for( int i = 0 ; i<reps ; i++ )
+        {
+            analyzer.Train(trainingPairs);
+            //if ( i%100 == 0 || i == reps-1 )
+            double error = analyzer.AvgTotalError(testPairs) ;
+            if( error < milestone )
+            {
+                cout << "HALVED ERROR - #" << i+1 << ": ERROR = " << error << '\n' ;
+                milestone = milestone/2 ;
 
-    } while(text!="x") ;
+                previousError = currentError ;
+                currentError = error ;
+            }
 
+            if ( i%1000 == 0 || i == reps-1 )
+            {
+                previousError = currentError ;
+                currentError = error ;
+                cout << "#" << i+1 << ": Error = " << error << " ( last change =" << currentError-previousError << " )\n" ;
+            }
 
-    //double w1 = .5, w2 = .5, eta = .5 ;
-    //Analyzer analyzer = Analyzer(w1,w2,eta);
-    //analyzer.Learn(fileName,1000) ;
+        }
 
+        cout << '\n' ;
 
-    cin.get() ;
+        analyzer.Show_Weights();
+
+        cout << "\n\nExit? " ;
+        cin >> text ;
+
+    } while(text != "exit" && text != "yes" && text != "y" ) ;
 
     return 0 ;
 }
 
-void Display_Pairs( vector<Pair> trainingPair )
-{
-    double x, y ;
-    for( vector<Pair>::iterator it = trainingPair.begin() ; it!=trainingPair.end() ; it++ )
-    {
-        x = (*it).Get_input() ;
-        y = (*it).Get_output() ;
-        cout << x << "             " << y << '\n' ;
-    }
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

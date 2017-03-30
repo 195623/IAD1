@@ -33,10 +33,11 @@
 		</Compiler>
 		<Unit filename="Analyzer.cpp" />
 		<Unit filename="Analyzer.h" />
+		<Unit filename="Pair.cpp" />
+		<Unit filename="Pair.h" />
 		<Unit filename="Reader.cpp" />
 		<Unit filename="Reader.h" />
-		<Unit filename="TrainingPair.cpp" />
-		<Unit filename="TrainingPair.h" />
+		<Unit filename="bare_functions.cpp" />
 		<Unit filename="main.cpp" />
 		<Extensions>
 			<code_completion />
