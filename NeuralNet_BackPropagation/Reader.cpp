@@ -58,7 +58,7 @@ Pair Reader::Parse_Line( string textLine )
 
     for( int i = 0 ; i<len ; i++ )
     {
-        if ( textLine[i] == ' ' )
+        if ( textLine[i] == ' ' || textLine[i] == '\t' )
         {
             spaceIndex = i ;
             break ;

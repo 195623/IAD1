@@ -16,78 +16,132 @@ int main()
 {
     string train1 = "approximation_train_1.txt",
            train2 = "approximation_train_2.txt",
-           test   = "approximation_test.txt" ;
+           test12   = "approximation_test.txt" ;
 
-    int   hiddenNeurons = 10 ;
-    double eta = 0.2, biasH = .3, biasO = 0.6 ;
+    string train0 = "linear_training.txt",
+           test0  = "linear_testing.txt" ;
 
-    /*cout << "eta = " ;
-    cin >> eta ;
+    string thisTraining = train1,
+           thisTesting  = test12,
+           thisDisplay  = train1 ;
 
-    if( eta > 0 )
+    // ----------------------------------------------------------------
+
+    string startingValuesLabel = "defined" ;
+
+    int repsIncrement = 10000 ;
+
+    int hiddenNeurons = 5;
+    double eta = .01 ;
+    double biasH = .5, biasO = .5 ;
+
+    string text = "yes" ;
+
+
+    cout << "Custom values? (y/n) " ;
+    cin >> text ;
+
+    int skip = 100 ;
+
+    if( text == "yes" || text == "y" )
     {
+        cout << "eta = " ;
+        cin >> eta ;
         cout << "#hidden_neurons = " ;
         cin >> hiddenNeurons ;
         cout << "biasH = " ;
         cin >> biasH ;
         cout << "biasO = " ;
         cin >> biasO ;
-    }*/
+    }
+    else if ( text == "d" )
+    {
+        Reader reader ;
+        vector<string> lines = reader.Read(thisTesting) ;
+        vector<Pair> pairs = reader.Parse_All_Lines(lines) ;
 
+        Analyzer analyzer = Analyzer(hiddenNeurons,eta,biasH,biasO,startingValuesLabel);
+
+        cout << "(Error = " << analyzer.AvgTotalError(pairs) << ")\n\n";
+        //analyzer.Display_Example_Outputs() ;
+        //analyzer.Display_Pairs(pairs) ;
+        cin.get();
+        cin.get();
+        return 0 ;
+    }
+
+    Analyzer analyzer = Analyzer(hiddenNeurons,eta,biasH,biasO,startingValuesLabel);
 
             Reader reader ;
-            vector<string> lines = reader.Read(train1) ;
+            vector<string> lines = reader.Read(thisTraining) ;
             vector<Pair> trainingPairs = reader.Parse_All_Lines(lines) ;
 
-            lines = reader.Read(test) ;
+            lines = reader.Read(thisTesting) ;
             vector<Pair> testPairs = reader.Parse_All_Lines(lines) ;
 
-    Analyzer analyzer = Analyzer(hiddenNeurons,eta,biasH,biasO,"random");
+    double epsilon = analyzer.Pair_Variance(trainingPairs,1)/1000 ;
+
+    // ----------------------------------------------------------------
 
     analyzer.Show_Weights();
     cout << "Average Total error: " << analyzer.AvgTotalError(testPairs) << '\n' ;
 
-    string text ;
-    int reps = 0 ;
-    cout << "Reps: " ;
-    cin >> reps ;
+    int allReps = repsIncrement ;
 
     double milestone = analyzer.AvgTotalError(testPairs) ;
     double previousError = 0, currentError = milestone ;
 
+    int i = 0 ;
+
+    // ----------------------------------------------------------------
+
     do
     {
-        for( int i = 0 ; i<reps ; i++ )
+        cout << "Epsilon: " << epsilon << "\n\n" ;
+
+        for( ; i<allReps ; i++ )
         {
             analyzer.Train(trainingPairs);
-            //if ( i%100 == 0 || i == reps-1 )
+
             double error = analyzer.AvgTotalError(testPairs) ;
-            if( error < milestone )
-            {
-                cout << "HALVED ERROR - #" << i+1 << ": ERROR = " << error << '\n' ;
-                milestone = milestone/2 ;
 
-                previousError = currentError ;
-                currentError = error ;
+            previousError = currentError ;
+            currentError = error ;
+
+            /*if( error < milestone )
+            {
+                cout << '\t' << i+1 << "\t ERROR = " << error << " \t( halved; last change =" << currentError-previousError << " )\n" ;
+                milestone = error/2 ;
+            }*/
+
+            if ( i%skip == 0 || i == allReps-1 )
+            {
+                cout << '\t' << i+1 << "\t Error = " << error << " \t( last change =" << currentError-previousError << " )\n" ;
             }
 
-            if ( i%1000 == 0 || i == reps-1 )
+            if( fabs(currentError-previousError)<epsilon || currentError>previousError+0.1 )
             {
-                previousError = currentError ;
-                currentError = error ;
-                cout << "#" << i+1 << ": Error = " << error << " ( last change =" << currentError-previousError << " )\n" ;
+                cout << '\t' << i+1 << "\t Error = " << error << " \t( last change =" << currentError-previousError << " )\n" ;
+                break ;
             }
-
         }
 
         cout << '\n' ;
 
         analyzer.Show_Weights();
 
-        cout << "\n\nExit? " ;
+        cout << "\nExit? " ;
         cin >> text ;
 
+        allReps += repsIncrement ;
+        epsilon = epsilon/10 ;
+
+        if( text == "d" ) analyzer.Display_Example_Outputs() ;
+
     } while(text != "exit" && text != "yes" && text != "y" ) ;
+
+    cin.get() ;
+    cin.get() ;
 
     return 0 ;
 }

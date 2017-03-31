@@ -22,17 +22,22 @@ public:
 
     double Hidden_weight_diff ( Pair trainingPair, int h_num ) ;
     double Output_weight_diff ( Pair trainingPair, int h_num ) ;
+
+    double biasHiddenDiff( Pair trainingPair ) ;
+    double biasOutputDiff( Pair trainingPair ) ;
+
     void Train(std::vector<Pair> trainingPairs) ;
+
+    double Display_Example_Outputs() ;
+
+
+    void Display_Pairs( std::vector<Pair> trainingPair ) ;
 
 private:
     double eta ;
 
-    std::vector<double> w_ins ;
-    std::vector<double> w_outs ;
-
-    //std::vector<double> out_h ;
-
-    //int hiddenNeurons ;
+    std::vector<double> w_h ;
+    std::vector<double> w_o ;
     double biasH ;
     double biasO ;
 };
