@@ -1,34 +1,95 @@
 # depslib dependency file v1.0
-1489862860 source:c:\users\administrator\desktop\edukacja\studia\inf_1\4b_semestr\inteligentna analiza danych\1. perceptron wielowarstwowy\neuralnet_backpropagation\main.cpp
+1491139393 source:c:\users\administrator\desktop\edukacja\studia\inf_1\4b_semestr\inteligentna analiza danych\1. perceptron wielowarstwowy\neuralnet_backpropagation\main.cpp
 	<iostream>
 	<tgmath.h>
 	<vector>
+	"headers.h"
+
+1491082129 source:c:\users\administrator\desktop\edukacja\studia\inf_1\4b_semestr\inteligentna analiza danych\1. perceptron wielowarstwowy\neuralnet_backpropagation\analyzer.cpp
+	<tgmath.h>
 	"Analyzer.h"
+	"Pair.h"
 	"Reader.h"
-	"TrainingPair.h"
+	<ctime>
+	<stdlib.h>
 
-1489862918 source:c:\users\administrator\desktop\edukacja\studia\inf_1\4b_semestr\inteligentna analiza danych\1. perceptron wielowarstwowy\neuralnet_backpropagation\analyzer.cpp
-	<tgmath.h>
-	"Analyzer.h"
-	"TrainingPair.h"
-
-1489862918 c:\users\administrator\desktop\edukacja\studia\inf_1\4b_semestr\inteligentna analiza danych\1. perceptron wielowarstwowy\neuralnet_backpropagation\analyzer.h
+1491085675 c:\users\administrator\desktop\edukacja\studia\inf_1\4b_semestr\inteligentna analiza danych\1. perceptron wielowarstwowy\neuralnet_backpropagation\analyzer.h
 	<vector>
-
-1489855524 c:\users\administrator\desktop\edukacja\studia\inf_1\4b_semestr\inteligentna analiza danych\1. perceptron wielowarstwowy\neuralnet_backpropagation\trainingpair.h
 	<iostream>
 
-1489862555 c:\users\administrator\desktop\edukacja\studia\inf_1\4b_semestr\inteligentna analiza danych\1. perceptron wielowarstwowy\neuralnet_backpropagation\reader.h
+1489859124 c:\users\administrator\desktop\edukacja\studia\inf_1\4b_semestr\inteligentna analiza danych\1. perceptron wielowarstwowy\neuralnet_backpropagation\trainingpair.h
+	<iostream>
+
+1490715871 c:\users\administrator\desktop\edukacja\studia\inf_1\4b_semestr\inteligentna analiza danych\1. perceptron wielowarstwowy\neuralnet_backpropagation\reader.h
 	<iostream>
 	<fstream>
 	<vector>
 
-1489862661 source:c:\users\administrator\desktop\edukacja\studia\inf_1\4b_semestr\inteligentna analiza danych\1. perceptron wielowarstwowy\neuralnet_backpropagation\reader.cpp
+1490895624 source:c:\users\administrator\desktop\edukacja\studia\inf_1\4b_semestr\inteligentna analiza danych\1. perceptron wielowarstwowy\neuralnet_backpropagation\reader.cpp
 	"Reader.h"
-	"TrainingPair.h"
+	"Pair.h"
 	<string>
 	<cstdlib>
 
-1489855513 source:c:\users\administrator\desktop\edukacja\studia\inf_1\4b_semestr\inteligentna analiza danych\1. perceptron wielowarstwowy\neuralnet_backpropagation\trainingpair.cpp
+1489859113 source:c:\users\administrator\desktop\edukacja\studia\inf_1\4b_semestr\inteligentna analiza danych\1. perceptron wielowarstwowy\neuralnet_backpropagation\trainingpair.cpp
 	"TrainingPair.h"
+
+1490715871 c:\users\administrator\desktop\edukacja\studia\inf_1\4b_semestr\inteligentna analiza danych\1. perceptron wielowarstwowy\neuralnet_backpropagation\pair.h
+	<iostream>
+
+1490715871 source:c:\users\administrator\desktop\edukacja\studia\inf_1\4b_semestr\inteligentna analiza danych\1. perceptron wielowarstwowy\neuralnet_backpropagation\pair.cpp
+	"Pair.h"
+
+1491131899 source:c:\users\administrator\desktop\edukacja\studia\inf_1\4b_semestr\inteligentna analiza danych\1. perceptron wielowarstwowy\neuralnet_backpropagation\bare_functions.cpp
+	<iostream>
+	<vector>
+	"headers.h"
+
+1491162520 source:c:\users\administrator\desktop\edukacja\studia\inf_1\4b_semestr\inteligentna analiza danych\1. perceptron wielowarstwowy\neuralnet_backpropagation\analyzers\analyzer.cpp
+	<tgmath.h>
+	<ctime>
+	<stdlib.h>
+	"../headers.h"
+
+1491164838 c:\users\administrator\desktop\edukacja\studia\inf_1\4b_semestr\inteligentna analiza danych\1. perceptron wielowarstwowy\neuralnet_backpropagation\headers.h
+	"Readers/Reader.h"
+	"Analyzers/Analyzer.h"
+	"Sets/Pair.h"
+	"Sets/Quad.h"
+	"Network.h"
+	"Neuron.h"
+
+1491162217 c:\users\administrator\desktop\edukacja\studia\inf_1\4b_semestr\inteligentna analiza danych\1. perceptron wielowarstwowy\neuralnet_backpropagation\readers\reader.h
+	<iostream>
+	<fstream>
+	<vector>
+
+1491085675 c:\users\administrator\desktop\edukacja\studia\inf_1\4b_semestr\inteligentna analiza danych\1. perceptron wielowarstwowy\neuralnet_backpropagation\analyzers\analyzer.h
+	<vector>
+	<iostream>
+
+1490715871 c:\users\administrator\desktop\edukacja\studia\inf_1\4b_semestr\inteligentna analiza danych\1. perceptron wielowarstwowy\neuralnet_backpropagation\sets\pair.h
+	<iostream>
+
+1491162184 source:c:\users\administrator\desktop\edukacja\studia\inf_1\4b_semestr\inteligentna analiza danych\1. perceptron wielowarstwowy\neuralnet_backpropagation\readers\reader.cpp
+	<string>
+	<cstdlib>
+	"../headers.h"
+
+1491131866 source:c:\users\administrator\desktop\edukacja\studia\inf_1\4b_semestr\inteligentna analiza danych\1. perceptron wielowarstwowy\neuralnet_backpropagation\sets\pair.cpp
+	"../headers.h"
+
+1491162031 c:\users\administrator\desktop\edukacja\studia\inf_1\4b_semestr\inteligentna analiza danych\1. perceptron wielowarstwowy\neuralnet_backpropagation\sets\quad.h
+	<iostream>
+
+1491165527 c:\users\administrator\desktop\edukacja\studia\inf_1\4b_semestr\inteligentna analiza danych\1. perceptron wielowarstwowy\neuralnet_backpropagation\network.h
+	<vector>
+	<iostream>
+
+1491164758 c:\users\administrator\desktop\edukacja\studia\inf_1\4b_semestr\inteligentna analiza danych\1. perceptron wielowarstwowy\neuralnet_backpropagation\neuron.h
+	<iostream>
+	<vector>
+
+1491162047 source:c:\users\administrator\desktop\edukacja\studia\inf_1\4b_semestr\inteligentna analiza danych\1. perceptron wielowarstwowy\neuralnet_backpropagation\sets\quad.cpp
+	"../headers.h"
 
