@@ -13,7 +13,39 @@ double Learning_Loop( Analyzer analyzer, vector<Pair> trainingPairs, vector<Pair
 
 int main()
 {
-    string train1 = "texts/approximation_train_1.txt",
+    Network network = Network(4,5,4);
+    vector<double> inputs ;
+    inputs.push_back(.3);
+    inputs.push_back(.4);
+    inputs.push_back(.7);
+
+    cout << endl ;
+
+    Reader reader = Reader();
+
+    vector<Quad> quads = reader.Create_Quads("texts/transformation.txt");
+
+    cout << endl ;
+
+    //cout << "Error = " << network.Total_Error(quads[0],quads) << '\n' ;
+    cout << "Error = " << network.Error(quads[0],quads[1])  << endl ;
+    network.Single_Lesson(quads[0],quads[1]) ;
+    cout << "\nError = " << network.Error(quads[0],quads[1]) ;
+
+    network.Single_Lesson(quads[0],quads[1]) ;
+    cout << "\nError = " << network.Error(quads[0],quads[1]) ;
+
+    network.Single_Lesson(quads[0],quads[1]) ;
+    cout << "\nError = " << network.Error(quads[0],quads[1]) ;
+
+    network.Single_Lesson(quads[0],quads[1]) ;
+    cout << "\nError = " << network.Error(quads[0],quads[1]) ;
+
+
+
+    return 0 ;
+}
+/*    string train1 = "texts/approximation_train_1.txt",
            train2 = "texts/approximation_train_2.txt",
            test12   = "texts/approximation_test.txt" ;
 
@@ -92,7 +124,7 @@ int main()
     cin.get() ;
 
     return 0 ;
-}
+}*/
 
 
 

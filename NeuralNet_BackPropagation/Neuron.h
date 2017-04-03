@@ -4,7 +4,11 @@
 class Neuron
 {
 public:
-    Neuron( int numberOfWeights );
+    Neuron( int numberOfWeights, bool showComments = false );
+    double Combine_Inputs( std::vector<double> input, double bias );
+    double Output_Logistic( std::vector<double> input, double bias );
+
+    double Get_weight( int i ) ;
 
 private:
     std::vector<double> inputWeights ;
