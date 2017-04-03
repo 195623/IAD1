@@ -92,11 +92,26 @@ Quad Reader::QuadParse_Line( string textLine )
     }
 
     double A = atof(a.c_str());
-    double B = atof(a.c_str());
-    double C = atof(a.c_str());
-    double D = atof(a.c_str());
+    double B = atof(b.c_str());
+    double C = atof(c.c_str());
+    double D = atof(d.c_str());
 
     return Quad(A,B,C,D) ;
+}
+
+vector<Quad> Reader::QuadParse_All_Lines( vector<string> lines )
+{
+    vector<Quad> quads ;
+
+    for( vector<string>::iterator i = lines.begin() ; i != lines.end() ; i++ )
+    {
+        //cout << *i << endl ;
+        quads.push_back( QuadParse_Line(*i) );
+    }
+
+    //cout << "\n\n" ;
+
+    return quads ;
 }
 
 
@@ -108,4 +123,11 @@ void Reader::Create_Pairs( string FileNameA, vector<Pair>* pPairsA, string FileN
 
         lines = Read(FileNameB) ;
         *pPairsB = Parse_All_Lines(lines) ;
+}
+
+
+vector<Quad> Reader::Create_Quads( string FileName )
+{
+        vector<string> lines = Read(FileName) ;
+        return QuadParse_All_Lines(lines);
 }
