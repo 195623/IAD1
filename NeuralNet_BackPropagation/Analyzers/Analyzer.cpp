@@ -192,7 +192,6 @@ double Analyzer::biasHiddenDiff( Pair trainingPair )
 
 double Analyzer::biasOutputDiff( Pair trainingPair )
 {
-    int i = 0 ;
     double input = trainingPair.Get_input() ;
 
     double outO = Out_o(input) ;

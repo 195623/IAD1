@@ -14,7 +14,14 @@ double Neuron::Get_weight( int i )
 {
     if( i>0 && i<this->inputWeights.size() ) return this->inputWeights[i] ;
 
+    cout << "[ Neuron::Get_weight: invalid weight index requested. ]\n" ;
     return 0 ;
+}
+
+void Neuron::Add_To_weight( double value, int i )
+{
+    if( i>=0 && i<this->inputWeights.size() ) this->inputWeights[i] += value ;
+    else cout << "[ Neuron::Add_To_weight: invalid weight index requested. ]\n" ;
 }
 
 double Neuron::Combine_Inputs( vector<double> inputs, double bias )

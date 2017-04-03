@@ -47,6 +47,21 @@ Network::Network( int iNeurons,
 
 }
 
+double Network::Output_Hidden_weight( int from, int to )
+{
+    return this->hiddenNeurons[to].Get_weight(from) ;
+}
+
+double Network::Output_Output_weight( int from, int to )
+{
+    return this->outputNeurons[to].Get_weight(from) ;
+}
+
+
+
+
+
+
 double Network::Output_HiddenNeuron( vector<double> iInputs, int neuronIndex )
 {
     double output = 0 ;
@@ -204,7 +219,6 @@ double Network::BiasO_Diff( Quad input, Quad target )
 {
     double out0, out1, out2, out3 ;
     double tar0, tar1, tar2, tar3 ;
-    double diff0, diff1, diff2, diff3 ;
 
     out0 = Output_OutputNeuron(input,0);
     out1 = Output_OutputNeuron(input,1);
@@ -225,6 +239,38 @@ double Network::BiasO_Diff( Quad input, Quad target )
 
     return diff ;
 }
+
+
+
+
+double Network::WeightO_Diff( Quad input, Quad target )
+{
+    double out0, out1, out2, out3 ;
+    double tar0, tar1, tar2, tar3 ;
+
+    out0 = Output_OutputNeuron(input,0);
+    out1 = Output_OutputNeuron(input,1);
+    out2 = Output_OutputNeuron(input,2);
+    out3 = Output_OutputNeuron(input,3);
+
+    tar0 = target.Get_a() ;
+    tar1 = target.Get_b() ;
+    tar2 = target.Get_c() ;
+    tar3 = target.Get_d() ;
+
+    double diff = 0 ;
+
+    diff += (out0-tar0)*out0*(1-out0) ;
+    diff += (out1-tar1)*out0*(1-out1) ;
+    diff += (out2-tar2)*out0*(1-out2) ;
+    diff += (out3-tar3)*out0*(1-out3) ;
+
+    return diff ;
+}
+
+
+
+
 
 void Network::Single_Lesson( Quad input, Quad target )
 {
