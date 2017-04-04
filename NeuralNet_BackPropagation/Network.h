@@ -37,7 +37,7 @@ public:
     double Total_Error( Quad in, std::vector<Quad> tarSet );
 
     double BiasO_Diff( Quad input, Quad target );
-    double WeightO_Diff( Quad input, Quad target, int from );
+    double WeightO_Diff( Quad input, Quad target, int from, int to );
 
 
 

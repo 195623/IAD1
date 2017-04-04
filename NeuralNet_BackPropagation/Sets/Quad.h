@@ -8,6 +8,7 @@ public:
     double Get_b();
     double Get_c();
     double Get_d();
+    double Get_x( int x ) ;
 
 private:
     double a ;

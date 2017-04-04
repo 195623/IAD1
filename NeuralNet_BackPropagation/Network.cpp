@@ -261,37 +261,13 @@ double Network::BiasO_Diff( Quad input, Quad target )
 
 
 
-double Network::WeightO_Diff( Quad input, Quad target, int from )
+double Network::WeightO_Diff( Quad input, Quad target, int from, int to )
 {
-    double outO_0, outO_1, outO_2, outO_3 ;
-    double tarO_0, tarO_1, tarO_2, tarO_3 ;
+    double outH = Output_HiddenNeuron(input,from) ;
+    double outO = Output_OutputNeuron(input,to)   ;
+    double tarO = target.Get_x(to) ;
 
-    outO_0 = Output_OutputNeuron(input,0);
-    outO_1 = Output_OutputNeuron(input,1);
-    outO_2 = Output_OutputNeuron(input,2);
-    outO_3 = Output_OutputNeuron(input,3);
-
-    tarO_0 = target.Get_a() ;
-    tarO_1 = target.Get_b() ;
-    tarO_2 = target.Get_c() ;
-    tarO_3 = target.Get_d() ;
-
-    double outH_n = Output_HiddenNeuron(input,from);
-    /*for( int i = 0 ; i<hiddenNeurons.size() ; i++ )
-    {
-        outH += Output_HiddenNeuron(input,i) ;
-    }*/
-
-
-    double diff = 0 ;
-    diff += (outO_0-tarO_0)*outO_0*(1-outO_0) ;
-    diff += (outO_1-tarO_1)*outO_1*(1-outO_1) ;
-    diff += (outO_2-tarO_2)*outO_2*(1-outO_2) ;
-    diff += (outO_3-tarO_3)*outO_3*(1-outO_3) ;
-
-    diff = diff * outH_n ;
-
-    return diff ;
+    return (outO-tarO)*outO*(1-outO)*outH ;
 }
 
 void Network::Modify_HiddenWeight( int from, int to, double value )
@@ -308,9 +284,13 @@ void Network::Modify_OutputWeight( int from, int to, double value )
 
 void Network::Single_Lesson( Quad input, Quad target )
 {
-    double dBiasO = BiasO_Diff(input,target) ;
-    cout << "(Added " << -eta*dBiasO << " to the output bias.)\n" ;
-    this->biasO -= eta*dBiasO ;
+    //double dBiasO = BiasO_Diff(input,target) ;
+    //cout << "(Added " << -eta*dBiasO << " to the output bias.)\n" ;
+    //this->biasO -= eta*dBiasO ;
+
+    double dWeightO_00 = -eta*WeightO_Diff(input,target,0,0) ;
+    cout << "\nAdded (" << dWeightO_00 << ") to the Wout_00.\n" ;
+    this->Modify_OutputWeight(0,0,dWeightO_00);
 
     //this->
 }

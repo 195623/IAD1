@@ -9,6 +9,20 @@ Quad::Quad( double a, double b, double c, double d )
     this->d = d ;
 }
 
+double Quad::Get_x( int x )
+{
+         if ( x == 0 ) return this->a ;
+    else if ( x == 1 ) return this->b ;
+    else if ( x == 2 ) return this->c ;
+    else if ( x == 3 ) return this->d ;
+
+    else
+    {
+        cout << "[ Quad::Get_x: invalid index value: " << x << " ]\n" ;
+        return 0 ;
+    }
+}
+
 double Quad::Get_a()
 {
     return this->a ;
