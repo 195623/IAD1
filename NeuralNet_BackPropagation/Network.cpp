@@ -20,6 +20,10 @@ Network::Network( int iNeurons,
     this->eta = eta ;
     this->hFunctionType = hFunctionType ;
     this->oFunctionType = oFunctionType ;
+    this->iNeuronsNumber = iNeurons ;
+
+    this->biasH = double(rand()%2000)/1000.0 - 1.0 ;
+    this->biasO = double(rand()%2000)/1000.0 - 1.0 ;
 
     if(showComments)
     {
@@ -27,7 +31,7 @@ Network::Network( int iNeurons,
         cout << "Creating Hidden Neurons:\n";
     }
 
-    this->iNeuronsNumber = iNeurons ;
+
 
     for( int i = 0 ; i <hNeurons ; i++ )
     {
@@ -44,6 +48,8 @@ Network::Network( int iNeurons,
     }
 
     if(showComments) cout << "\n\nCREATED A NETWORK." ;
+
+    cout << this->biasH << " " << this->biasO << "<---\n\n" ;
 
 }
 
@@ -186,6 +192,8 @@ double Network::Error(vector<double> inputs, vector<double> expectedOutputs )
 double Network::Error( Quad in, Quad tar  )
 {
     Quad out = Output_OutputQuad(in);
+    //in.Display(); cout << "-->" ; out.Display() ; cout << "\n" ;
+    out.Display(); cout << "<>" ; tar.Display() ; cout << "\n" ;
 
     double error = -1 ;
     if( this->iNeuronsNumber == 4 && this->outputNeurons.size() == 4 )
@@ -201,14 +209,19 @@ double Network::Error( Quad in, Quad tar  )
 }
 
 
-double Network::Total_Error( Quad in, vector<Quad> tarSet )
+double Network::Total_Error( vector<Quad> inSet, vector<Quad> tarSet )
 {
     double error = 0 ;
 
-    vector<double> outputs ;
+    if( inSet.size() != tarSet.size() )
+    {
+        cout << "[ Network::Total_Error: inSet.size() != tarSet.size() ]\n" ;
+        return 0 ;
+    }
+
     for (int i = 0 ; i<tarSet.size() ; i++ )
     {
-        error += Error(in,tarSet[i]) ;
+        error += Error(inSet[i],tarSet[i]) ;
     }
 
     return error/tarSet.size(); ;
@@ -284,13 +297,23 @@ void Network::Modify_OutputWeight( int from, int to, double value )
 
 void Network::Single_Lesson( Quad input, Quad target )
 {
-    //double dBiasO = BiasO_Diff(input,target) ;
-    //cout << "(Added " << -eta*dBiasO << " to the output bias.)\n" ;
-    //this->biasO -= eta*dBiasO ;
+    double dBiasO = BiasO_Diff(input,target) ;
+    this->biasO -= eta*dBiasO ;
 
-    double dWeightO_00 = -eta*WeightO_Diff(input,target,0,0) ;
-    cout << "\nAdded (" << dWeightO_00 << ") to the Wout_00.\n" ;
-    this->Modify_OutputWeight(0,0,dWeightO_00);
+    for( int from = 0 ; from < hiddenNeurons.size() ; from++ )
+    {
+        for( int to = 0 ; to < outputNeurons.size() ; to++ )
+        {
+            double dWeightO = -eta*WeightO_Diff(input,target,from,to) ;
+            this->Modify_OutputWeight(from,to,dWeightO) ;
+        }
+    }
+
 
     //this->
+}
+
+void Network::All_Lessons( vector<Quad> inputs, vector<Quad> targets )
+{
+    for( int i = 0 ; i<inputs.size() ; i++ ) Single_Lesson(inputs[i],targets[i]) ;
 }

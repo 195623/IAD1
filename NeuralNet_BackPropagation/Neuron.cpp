@@ -5,7 +5,7 @@ Neuron::Neuron( int numberOfWeights, bool showComments )
 {
     for( int i = 0 ; i<numberOfWeights ; i++ )
     {
-        this->inputWeights.push_back( double(rand()%1000) / 1000.0) ;
+        this->inputWeights.push_back( double(rand()%2000)/1000.0 - 1.0 ) ;
         if(showComments) cout << "  * Weight #" << i+1 << " = " << inputWeights[i] << "\n" ;
     }
 }

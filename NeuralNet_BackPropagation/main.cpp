@@ -14,10 +14,6 @@ double Learning_Loop( Analyzer analyzer, vector<Pair> trainingPairs, vector<Pair
 int main()
 {
     Network network = Network(4,5,4);
-    vector<double> inputs ;
-    inputs.push_back(.3);
-    inputs.push_back(.4);
-    inputs.push_back(.7);
 
     cout << endl ;
 
@@ -28,19 +24,12 @@ int main()
     cout << endl ;
 
     //cout << "Error = " << network.Total_Error(quads[0],quads) << '\n' ;
-    cout << "Error = " << network.Error(quads[0],quads[1])  << endl ;
-    network.Single_Lesson(quads[0],quads[1]) ;
-    cout << "\nError = " << network.Error(quads[0],quads[1]) ;
 
-    network.Single_Lesson(quads[0],quads[1]) ;
-    cout << "\nError = " << network.Error(quads[0],quads[1]) ;
-
-    network.Single_Lesson(quads[0],quads[1]) ;
-    cout << "\nError = " << network.Error(quads[0],quads[1]) ;
-
-    network.Single_Lesson(quads[0],quads[1]) ;
-    cout << "\nError = " << network.Error(quads[0],quads[1]) ;
-
+    for( int i = 0 ;i<10;i++)
+    {
+        cout << "Error = " << network.Total_Error(quads,quads) << '\n' ;
+        network.All_Lessons(quads,quads);
+    }
 
 
     return 0 ;

@@ -34,7 +34,7 @@ public:
 
     double Error(std::vector<double> inputs, std::vector<double> expectedOutputs );
     double Error( Quad in, Quad tar ) ;
-    double Total_Error( Quad in, std::vector<Quad> tarSet );
+    double Total_Error( std::vector<Quad> inSet, std::vector<Quad> tarSet );
 
     double BiasO_Diff( Quad input, Quad target );
     double WeightO_Diff( Quad input, Quad target, int from, int to );
@@ -42,6 +42,7 @@ public:
 
 
     void Single_Lesson( Quad input, Quad target ) ;
+    void All_Lessons( std::vector<Quad> inputs, std::vector<Quad> targets ) ;
 
 
 private:

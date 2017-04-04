@@ -9,6 +9,7 @@ public:
     double Get_c();
     double Get_d();
     double Get_x( int x ) ;
+    void Display();
 
 private:
     double a ;

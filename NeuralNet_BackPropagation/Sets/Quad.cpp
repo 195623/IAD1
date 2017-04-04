@@ -9,6 +9,11 @@ Quad::Quad( double a, double b, double c, double d )
     this->d = d ;
 }
 
+void Quad::Display()
+{
+    cout << "(" << this->a << ", " << this->b << ", " << this->c << ", " << this->d << ")";
+}
+
 double Quad::Get_x( int x )
 {
          if ( x == 0 ) return this->a ;
