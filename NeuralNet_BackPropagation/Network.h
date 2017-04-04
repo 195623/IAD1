@@ -18,8 +18,13 @@ public:
     double Output_Hidden_weight( int from, int to ) ;
     double Output_Output_weight( int from, int to ) ;
 
+    void Modify_HiddenWeight( int from, int to, double value ) ;
+    void Modify_OutputWeight( int from, int to, double value ) ;
+
     double Output_HiddenNeuron( std::vector<double> iInputs, int neuronIndex );
-    double Output_OutputNeuron( std::vector<double> iInputs, int neuronIndex ) ;
+    double Output_HiddenNeuron( Quad input, int neuronIndex );
+
+    double Output_OutputNeuron( std::vector<double> iInputs, int outputIndex ) ;
     double Output_OutputNeuron( Quad input, int outputIndex );
 
     std::vector<double> Output_OutputSet( std::vector<double> iInputs ) ;
@@ -32,7 +37,7 @@ public:
     double Total_Error( Quad in, std::vector<Quad> tarSet );
 
     double BiasO_Diff( Quad input, Quad target );
-    double WeightO_Diff( Quad input, Quad target );
+    double WeightO_Diff( Quad input, Quad target, int from );
 
 
 
