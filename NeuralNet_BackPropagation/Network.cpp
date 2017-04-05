@@ -288,7 +288,36 @@ double Network::BiasO_Diff( Quad input, Quad target )
     return diff ;
 }
 
+double Network::BH_Diff( Quad input, Quad target, int h )
+{
+    double diff = 0 ;
 
+    for( int o = 0 ; o < this->outputNeurons.size() ; o++ )
+    {
+        double outO = OutO(input,o);
+        double tarO = target.Get_x(o) ;
+        double Who  = Output_OWeight(h,o) ;
+
+        diff += (outO-tarO)*outO*(1-outO)*Who ;
+    }
+
+    double outH = OutH(input,h);
+
+    diff = diff*outH*(1-outH) ;
+
+    return diff ;
+}
+
+double Network::BiasH_Diff( Quad input, Quad target )
+{
+    double diff = 0 ;
+    for( int h = 0 ; h<hiddenNeurons.size() ; h++ )
+    {
+        diff += BH_Diff(input,target,h) ;
+    }
+
+    return diff ;
+}
 
 
 double Network::WeightO_Diff( Quad input, Quad target, int fromH, int toO )
@@ -320,6 +349,12 @@ double Network::WeightH_Diff( Quad input, Quad target, int fromI, int toH )
     return diff ;
 }
 
+
+
+
+
+
+
 void Network::Modify_HWeight( int from, int to, double value )
 {
     this->hiddenNeurons[to].Add_To_weight(value,from);
@@ -337,6 +372,9 @@ void Network::Single_Lesson( Quad input, Quad target )
     double dBiasO = BiasO_Diff(input,target) ;
     this->biasO -= eta*dBiasO ;
 
+    double dBiasH = BiasH_Diff(input,target) ;
+    this->biasH -= eta*dBiasH ;
+
     for( int h = 0 ; h < hiddenNeurons.size() ; h++ )
     {
         for( int o = 0 ; o < outputNeurons.size() ; o++ )
@@ -350,6 +388,9 @@ void Network::Single_Lesson( Quad input, Quad target )
             double dWeightH = -eta*WeightH_Diff(input,target,i,h) ;
             this->Modify_HWeight(i,h,dWeightH) ;
         }
+
+
+
     }
 
 

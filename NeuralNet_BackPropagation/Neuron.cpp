@@ -6,6 +6,7 @@ Neuron::Neuron( int numberOfWeights, bool showComments )
     for( int i = 0 ; i<numberOfWeights ; i++ )
     {
         this->inputWeights.push_back( double(rand()%2000)/1000.0 - 1.0 ) ;
+        this->lastChange.push_back(0) ;
         if(showComments) cout << "  * Weight #" << i+1 << " = " << inputWeights[i] << "\n" ;
     }
 }
@@ -27,7 +28,11 @@ double Neuron::Get_weight( int i )
 
 void Neuron::Add_To_weight( double value, int i )
 {
-    if( i>=0 && i<this->inputWeights.size() ) this->inputWeights[i] += value ;
+    if( i>=0 && i<this->inputWeights.size() )
+    {
+        this->inputWeights[i] += value ;
+        this->lastChange[i] = value ;
+    }
     else cout << "[ Neuron::Add_To_weight: invalid weight index requested. ]\n" ;
 }
 

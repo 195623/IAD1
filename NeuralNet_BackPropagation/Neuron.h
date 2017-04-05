@@ -15,4 +15,5 @@ public:
 
 private:
     std::vector<double> inputWeights ;
+    std::vector<double> lastChange ;
 };
