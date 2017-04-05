@@ -10,6 +10,7 @@ Network::Network( int iNeurons,
                   int hNeurons,
                   int oNeurons,
                   double eta,
+                  double momentum,
                   string hFunctionType,
                   string oFunctionType,
                   string parametersChoice,
@@ -18,12 +19,16 @@ Network::Network( int iNeurons,
     srand (time(NULL));
 
     this->eta = eta ;
+    this->momentum = momentum ;
     this->hFunctionType = hFunctionType ;
     this->oFunctionType = oFunctionType ;
     this->iNeuronsNumber = iNeurons ;
 
     this->biasH = double(rand()%2000)/1000.0 - 1.0 ;
     this->biasO = double(rand()%2000)/1000.0 - 1.0 ;
+
+    lastBiasHchange = 0 ;
+    lastBiasOchange = 0 ;
 
     if(showComments)
     {
@@ -355,14 +360,14 @@ double Network::WeightH_Diff( Quad input, Quad target, int fromI, int toH )
 
 
 
-void Network::Modify_HWeight( int from, int to, double value )
+void Network::Modify_HWeight_mom( int from, int to, double value )
 {
-    this->hiddenNeurons[to].Add_To_weight(value,from);
+    this->hiddenNeurons[to].Add_To_weight(value,from,momentum);
 }
 
-void Network::Modify_OWeight( int from, int to, double value )
+void Network::Modify_OWeight_mom( int from, int to, double value )
 {
-    this->outputNeurons[to].Add_To_weight(value,from);
+    this->outputNeurons[to].Add_To_weight(value,from,momentum);
 }
 
 
@@ -370,32 +375,48 @@ void Network::Modify_OWeight( int from, int to, double value )
 void Network::Single_Lesson( Quad input, Quad target )
 {
     double dBiasO = BiasO_Diff(input,target) ;
-    this->biasO -= eta*dBiasO ;
+    Add_To_biasO_etamom(-dBiasO) ;
 
     double dBiasH = BiasH_Diff(input,target) ;
-    this->biasH -= eta*dBiasH ;
+    Add_To_biasH_etamom(-dBiasH) ;
 
     for( int h = 0 ; h < hiddenNeurons.size() ; h++ )
     {
         for( int o = 0 ; o < outputNeurons.size() ; o++ )
         {
             double dWeightO = -eta*WeightO_Diff(input,target,h,o) ;
-            this->Modify_OWeight(h,o,dWeightO) ;
+            this->Modify_OWeight_mom(h,o,dWeightO) ;
         }
 
         for( int i = 0 ; i < iNeuronsNumber ; i++ )
         {
             double dWeightH = -eta*WeightH_Diff(input,target,i,h) ;
-            this->Modify_HWeight(i,h,dWeightH) ;
+            this->Modify_HWeight_mom(i,h,dWeightH) ;
         }
-
-
-
     }
-
-
     //this->
 }
+
+void Network::Add_To_biasH_etamom( double value )
+{
+    double thisChange = value*(1-momentum) + momentum*lastBiasHchange ;
+    thisChange = thisChange*eta ;
+    this->biasH += thisChange ;
+
+    lastBiasHchange = thisChange ;
+}
+
+
+void Network::Add_To_biasO_etamom( double value )
+{
+    double thisChange = value*(1-momentum) + momentum*lastBiasOchange ;
+    thisChange = thisChange*eta ;
+    this->biasO += thisChange ;
+
+    lastBiasOchange = thisChange ;
+}
+
+
 
 void Network::All_Lessons( vector<Quad> inputs, vector<Quad> targets )
 {

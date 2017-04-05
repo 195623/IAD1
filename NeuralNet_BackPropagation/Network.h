@@ -10,6 +10,7 @@ public:
              int hNeurons = 1,
              int oNeurons = 1,
              double eta = 0.5,
+             double momentum = 0,
              std::string hFunctionType = "logistic",
              std::string oFunctionType = "linear",
              std::string parametersChoice = "random",
@@ -20,8 +21,8 @@ public:
     double Output_HWeight( int from, int to ) ;
     double Output_OWeight( int from, int to ) ;
 
-    void Modify_HWeight( int from, int to, double value ) ;
-    void Modify_OWeight( int from, int to, double value ) ;
+    void Modify_HWeight_mom( int from, int to, double value ) ;
+    void Modify_OWeight_mom( int from, int to, double value ) ;
 
     double OutH( std::vector<double> iInputs, int neuronIndex );
     double OutH( Quad input, int neuronIndex );
@@ -46,6 +47,9 @@ public:
     double WeightO_Diff( Quad input, Quad target, int fromH, int toO );
     double WeightH_Diff( Quad input, Quad target, int fromI, int toH );
 
+    void Add_To_biasH_etamom( double value ) ;
+    void Add_To_biasO_etamom( double value ) ;
+
     void Single_Lesson( Quad input, Quad target ) ;
     void All_Lessons( std::vector<Quad> inputs, std::vector<Quad> targets ) ;
 
@@ -58,8 +62,12 @@ private:
     std::string hFunctionType ;
     std::string oFunctionType ;
     double eta ;
+    double momentum ;
     double biasH ;
     double biasO ;
+
+    double lastBiasHchange ;
+    double lastBiasOchange ;
 };
 
 

@@ -11,7 +11,7 @@ public:
     double Output_Logistic( std::vector<double> input, double bias );
 
     double Get_weight( int i ) ;
-    void Add_To_weight( double value, int i ) ;
+    void Add_To_weight( double value, int i, double momentum = 0 ) ;
 
 private:
     std::vector<double> inputWeights ;
