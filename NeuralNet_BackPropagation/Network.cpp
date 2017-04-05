@@ -48,17 +48,34 @@ Network::Network( int iNeurons,
     }
 
     if(showComments) cout << "\n\nCREATED A NETWORK." ;
-
-    cout << this->biasH << " " << this->biasO << "<---\n\n" ;
-
 }
 
-double Network::Output_Hidden_weight( int from, int to )
+void Network::Show_Network()
+{
+    cout << "BiasH = " << biasH << '\n' ;
+    cout << "BiasO = " << biasO << '\n' ;
+
+    cout << "Hidden neurons:\n" ;
+    for( int i = 0 ; i<this->hiddenNeurons.size() ; i++ )
+    {
+        hiddenNeurons[i].Show_Neuron() ;
+        cout << '\n' ;
+    }
+
+    cout << "\n\nOutput neurons:\n" ;
+    for( int i = 0 ; i<this->outputNeurons.size() ; i++ )
+    {
+        outputNeurons[i].Show_Neuron() ;
+        cout << '\n' ;
+    }
+}
+
+double Network::Output_HWeight( int from, int to )
 {
     return this->hiddenNeurons[to].Get_weight(from) ;
 }
 
-double Network::Output_Output_weight( int from, int to )
+double Network::Output_OWeight( int from, int to )
 {
     return this->outputNeurons[to].Get_weight(from) ;
 }
@@ -68,7 +85,7 @@ double Network::Output_Output_weight( int from, int to )
 
 
 
-double Network::Output_HiddenNeuron( vector<double> iInputs, int neuronIndex )
+double Network::OutH( vector<double> iInputs, int neuronIndex )
 {
     double output = 0 ;
     if( neuronIndex >= 0 && neuronIndex < this->hiddenNeurons.size() ) output = this->hiddenNeurons[neuronIndex].Output_Logistic(iInputs,this->biasH);
@@ -79,7 +96,7 @@ double Network::Output_HiddenNeuron( vector<double> iInputs, int neuronIndex )
 
 
 
-double Network::Output_HiddenNeuron( Quad input, int neuronIndex )
+double Network::OutH( Quad input, int neuronIndex )
 {
     double output = 0 ;
 
@@ -95,14 +112,14 @@ double Network::Output_HiddenNeuron( Quad input, int neuronIndex )
 }
 
 
-double Network::Output_OutputNeuron( vector<double> iInputs, int neuronIndex )
+double Network::OutO( vector<double> iInputs, int neuronIndex )
 {
     double output = 0 ;
     vector<double> hiddenOutputs ;
 
     for( int i = 0 ; i<hiddenNeurons.size() ; i++ )
     {
-        hiddenOutputs.push_back(Output_HiddenNeuron(iInputs,i));
+        hiddenOutputs.push_back(OutH(iInputs,i));
     }
 
     if( neuronIndex >= 0 && neuronIndex < this->outputNeurons.size() ) output = this->outputNeurons[neuronIndex].Output_Logistic(hiddenOutputs,this->biasO);
@@ -115,7 +132,7 @@ vector<double> Network::Output_OutputSet( vector<double> iInputs )
     vector<double> outputs ;
     for( int i = 0 ; i < this->outputNeurons.size() ; i++ )
     {
-        double output = Output_OutputNeuron(iInputs,i) ;
+        double output = OutO(iInputs,i) ;
         outputs.push_back(output);
     }
 
@@ -124,7 +141,7 @@ vector<double> Network::Output_OutputSet( vector<double> iInputs )
 
 
 
-double Network::Output_OutputNeuron( Quad input, int outputIndex )
+double Network::OutO( Quad input, int outputIndex )
 {
     double output = 0 ;
     vector<double> hiddenOutputs ;
@@ -137,7 +154,7 @@ double Network::Output_OutputNeuron( Quad input, int outputIndex )
 
     for( int i = 0 ; i<hiddenNeurons.size() ; i++ )
     {
-        hiddenOutputs.push_back(Output_HiddenNeuron(iInputs,i));
+        hiddenOutputs.push_back(OutH(iInputs,i));
     }
 
     if( outputIndex >= 0 && outputIndex < this->outputNeurons.size() ) output = this->outputNeurons[outputIndex].Output_Logistic(hiddenOutputs,this->biasO);
@@ -161,7 +178,7 @@ Quad Network::Output_OutputQuad( Quad input )
 
     for( int i = 0 ; i<hiddenNeurons.size() ; i++ )
     {
-        hiddenOutputs.push_back(Output_HiddenNeuron(iInputs,i));
+        hiddenOutputs.push_back(OutH(iInputs,i));
     }
 
     a = this->outputNeurons[0].Output_Logistic(hiddenOutputs,this->biasO);
@@ -193,7 +210,7 @@ double Network::Error( Quad in, Quad tar  )
 {
     Quad out = Output_OutputQuad(in);
     //in.Display(); cout << "-->" ; out.Display() ; cout << "\n" ;
-    out.Display(); cout << "<>" ; tar.Display() ; cout << "\n" ;
+    //out.Display(); cout << "<>" ; tar.Display() ; cout << "\n" ;
 
     double error = -1 ;
     if( this->iNeuronsNumber == 4 && this->outputNeurons.size() == 4 )
@@ -236,10 +253,10 @@ Quad Network::Convert_To_Quad( vector<double> inputs )
     double a, b, c, d ;
     if( outputNeurons.size() == 4 )
     {
-        a = Output_OutputNeuron(inputs,0);
-        b = Output_OutputNeuron(inputs,1);
-        c = Output_OutputNeuron(inputs,2);
-        d = Output_OutputNeuron(inputs,3);
+        a = OutO(inputs,0);
+        b = OutO(inputs,1);
+        c = OutO(inputs,2);
+        d = OutO(inputs,3);
     }
     else cout << "[ Network::Output_Quad: function accepts only 4 arguments. ]" ;
 
@@ -251,10 +268,10 @@ double Network::BiasO_Diff( Quad input, Quad target )
     double out0, out1, out2, out3 ;
     double tar0, tar1, tar2, tar3 ;
 
-    out0 = Output_OutputNeuron(input,0);
-    out1 = Output_OutputNeuron(input,1);
-    out2 = Output_OutputNeuron(input,2);
-    out3 = Output_OutputNeuron(input,3);
+    out0 = OutO(input,0);
+    out1 = OutO(input,1);
+    out2 = OutO(input,2);
+    out3 = OutO(input,3);
 
     tar0 = target.Get_a() ;
     tar1 = target.Get_b() ;
@@ -274,21 +291,41 @@ double Network::BiasO_Diff( Quad input, Quad target )
 
 
 
-double Network::WeightO_Diff( Quad input, Quad target, int from, int to )
+double Network::WeightO_Diff( Quad input, Quad target, int fromH, int toO )
 {
-    double outH = Output_HiddenNeuron(input,from) ;
-    double outO = Output_OutputNeuron(input,to)   ;
-    double tarO = target.Get_x(to) ;
+    double outH = OutH(input,fromH) ;
+    double outO = OutO(input,toO)   ;
+    double tarO = target.Get_x(toO) ;
 
     return (outO-tarO)*outO*(1-outO)*outH ;
 }
 
-void Network::Modify_HiddenWeight( int from, int to, double value )
+double Network::WeightH_Diff( Quad input, Quad target, int fromI, int toH )
+{
+    double diff = 0 ;
+
+    for( int o = 0 ; o < this->outputNeurons.size() ; o++ )
+    {
+        double outO = OutO(input,o);
+        double tarO = target.Get_x(o) ;
+        double Who  = Output_OWeight(toH,o) ;
+
+        diff += (outO-tarO)*outO*(1-outO)*Who ;
+    }
+
+    double outH = OutH(input,toH);
+
+    diff = diff*outH*(1-outH)*input.Get_x(fromI) ;
+
+    return diff ;
+}
+
+void Network::Modify_HWeight( int from, int to, double value )
 {
     this->hiddenNeurons[to].Add_To_weight(value,from);
 }
 
-void Network::Modify_OutputWeight( int from, int to, double value )
+void Network::Modify_OWeight( int from, int to, double value )
 {
     this->outputNeurons[to].Add_To_weight(value,from);
 }
@@ -300,12 +337,18 @@ void Network::Single_Lesson( Quad input, Quad target )
     double dBiasO = BiasO_Diff(input,target) ;
     this->biasO -= eta*dBiasO ;
 
-    for( int from = 0 ; from < hiddenNeurons.size() ; from++ )
+    for( int h = 0 ; h < hiddenNeurons.size() ; h++ )
     {
-        for( int to = 0 ; to < outputNeurons.size() ; to++ )
+        for( int o = 0 ; o < outputNeurons.size() ; o++ )
         {
-            double dWeightO = -eta*WeightO_Diff(input,target,from,to) ;
-            this->Modify_OutputWeight(from,to,dWeightO) ;
+            double dWeightO = -eta*WeightO_Diff(input,target,h,o) ;
+            this->Modify_OWeight(h,o,dWeightO) ;
+        }
+
+        for( int i = 0 ; i < iNeuronsNumber ; i++ )
+        {
+            double dWeightH = -eta*WeightH_Diff(input,target,i,h) ;
+            this->Modify_HWeight(i,h,dWeightH) ;
         }
     }
 

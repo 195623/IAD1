@@ -14,22 +14,19 @@ double Learning_Loop( Analyzer analyzer, vector<Pair> trainingPairs, vector<Pair
 int main()
 {
     Network network = Network(4,5,4);
-
-    cout << endl ;
-
     Reader reader = Reader();
-
     vector<Quad> quads = reader.Create_Quads("texts/transformation.txt");
 
-    cout << endl ;
+    //network.Show_Network();
 
-    //cout << "Error = " << network.Total_Error(quads[0],quads) << '\n' ;
-
-    for( int i = 0 ;i<10;i++)
+    cout << "\nError = " << network.Total_Error(quads,quads) << '\n' ;
+    for( int i = 0 ;i<1000;i++)
     {
-        cout << "Error = " << network.Total_Error(quads,quads) << '\n' ;
         network.All_Lessons(quads,quads);
     }
+    cout << "Error = " << network.Total_Error(quads,quads) << '\n' ;
+
+    //network.Show_Network();
 
 
     return 0 ;

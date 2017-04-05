@@ -10,11 +10,18 @@ Neuron::Neuron( int numberOfWeights, bool showComments )
     }
 }
 
+void Neuron::Show_Neuron()
+{
+    for( int i = 0 ; i<this->inputWeights.size() ; i++ )
+    {
+        cout << "w[" << i << "] = " << this->inputWeights[i] << ' ';
+    }
+}
+
 double Neuron::Get_weight( int i )
 {
-    if( i>0 && i<this->inputWeights.size() ) return this->inputWeights[i] ;
-
-    cout << "[ Neuron::Get_weight: invalid weight index requested. ]\n" ;
+    if( i>=0 && i<this->inputWeights.size() ) return this->inputWeights[i] ;
+    else cout << "[ Neuron::Get_weight: invalid weight index requested: " << i << " ]\n" ;
     return 0 ;
 }
 

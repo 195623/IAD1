@@ -15,17 +15,19 @@ public:
              std::string parametersChoice = "random",
              bool showComments = false ) ;
 
-    double Output_Hidden_weight( int from, int to ) ;
-    double Output_Output_weight( int from, int to ) ;
+    void Show_Network();
 
-    void Modify_HiddenWeight( int from, int to, double value ) ;
-    void Modify_OutputWeight( int from, int to, double value ) ;
+    double Output_HWeight( int from, int to ) ;
+    double Output_OWeight( int from, int to ) ;
 
-    double Output_HiddenNeuron( std::vector<double> iInputs, int neuronIndex );
-    double Output_HiddenNeuron( Quad input, int neuronIndex );
+    void Modify_HWeight( int from, int to, double value ) ;
+    void Modify_OWeight( int from, int to, double value ) ;
 
-    double Output_OutputNeuron( std::vector<double> iInputs, int outputIndex ) ;
-    double Output_OutputNeuron( Quad input, int outputIndex );
+    double OutH( std::vector<double> iInputs, int neuronIndex );
+    double OutH( Quad input, int neuronIndex );
+
+    double OutO( std::vector<double> iInputs, int outputIndex ) ;
+    double OutO( Quad input, int outputIndex );
 
     std::vector<double> Output_OutputSet( std::vector<double> iInputs ) ;
 
@@ -37,9 +39,8 @@ public:
     double Total_Error( std::vector<Quad> inSet, std::vector<Quad> tarSet );
 
     double BiasO_Diff( Quad input, Quad target );
-    double WeightO_Diff( Quad input, Quad target, int from, int to );
-
-
+    double WeightO_Diff( Quad input, Quad target, int fromH, int toO );
+    double WeightH_Diff( Quad input, Quad target, int fromI, int toH );
 
     void Single_Lesson( Quad input, Quad target ) ;
     void All_Lessons( std::vector<Quad> inputs, std::vector<Quad> targets ) ;

@@ -5,6 +5,8 @@ class Neuron
 {
 public:
     Neuron( int numberOfWeights, bool showComments = false );
+    void Show_Neuron();
+
     double Combine_Inputs( std::vector<double> input, double bias );
     double Output_Logistic( std::vector<double> input, double bias );
 
