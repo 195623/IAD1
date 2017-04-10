@@ -13,8 +13,14 @@ public:
              double momentum = 0,
              std::string hFunctionType = "logistic",
              std::string oFunctionType = "linear",
-             std::string parametersChoice = "random",
+             std::string parametersChoice = "all random",
+             double biasO = 0,
+             double biasH = 0,
              bool showComments = false ) ;
+
+    void Set_Biases( double biasH, double biasO ) ;
+    void Set_eta( double eta ) ;
+    void Set_momentum( double momentum );
 
     void Show_Network();
 

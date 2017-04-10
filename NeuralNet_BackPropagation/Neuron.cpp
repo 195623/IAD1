@@ -28,14 +28,14 @@ double Neuron::Get_weight( int i )
 
 void Neuron::Add_To_weight( double value, int i, double momentum )
 {
-    if( i>=0 && i<this->inputWeights.size() )
+    if( i>=0 && i<this->inputWeights.size() && i<this->lastChange.size() )
     {
-        double thisChange = value*(1-momentum) ;
-        thisChange += momentum*lastChange[i] ;
+        double thisChange = (1-momentum)*value + momentum*lastChange[i] ;
 
-        this->inputWeights[i] += value*(1-momentum) ;
+        this->inputWeights[i] += thisChange ;
 
         this->lastChange[i] = thisChange ;
+        //cout << "1-mom = " << 1-momentum << '\n' ;
     }
     else cout << "[ Neuron::Add_To_weight: invalid weight index requested. ]\n" ;
 }
